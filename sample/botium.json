@@ -3,7 +3,7 @@
     "Capabilities": {
       "PROJECTNAME": "botium-qnamaker-sample",
       "CONTAINERMODE": "qnamaker",
-      "QNAMAKER_ENDPOINT": "https://botiumtestqnamaker.azurewebsites.net/qnamaker/knowledgebases/8021ee97-ba3c-4681-b16e-3ef002d346ab/generateAnswer",
+      "QNAMAKER_ENDPOINT": "https://yyyyyyyyyyy.azurewebsites.net/qnamaker/knowledgebases/xxxxxxxxxxxxx/generateAnswer",
       "QNAMAKER_ENDPOINT_KEY": "xxx"
     }
   }

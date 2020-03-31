@@ -27,7 +27,7 @@ class BotiumConnectorQnAMaker {
     this.delegateCaps = {
       [CoreCapabilities.SIMPLEREST_URL]: this.caps[Capabilities.QNAMAKER_ENDPOINT],
       [CoreCapabilities.SIMPLEREST_METHOD]: 'POST',
-      [CoreCapabilities.SIMPLEREST_BODY_TEMPLATE]: '{ "question": "{{msg.messageText}}" }',
+      [CoreCapabilities.SIMPLEREST_BODY_TEMPLATE]: '{ "question": "{{msg.messageText}}", "top": 5 }',
       [CoreCapabilities.SIMPLEREST_HEADERS_TEMPLATE]: {
         Authorization: `EndpointKey ${this.caps[Capabilities.QNAMAKER_ENDPOINT_KEY]}`
       },
@@ -36,7 +36,12 @@ class BotiumConnectorQnAMaker {
         if (botMsg.sourceData && botMsg.sourceData.answers && botMsg.sourceData.answers.length > 0) {
           botMsg.nlp = {
             intent: {
-              confidence: (botMsg.sourceData.answers[0].score || 0) / 100
+              name: botMsg.sourceData.answers[0].questions[0],
+              confidence: (botMsg.sourceData.answers[0].score || 0) / 100,
+              intents: botMsg.sourceData.answers.length > 1 && botMsg.sourceData.answers.slice(1).map(a => ({
+                name: a.questions[0],
+                confidence: (a.score || 0) / 100
+              }))
             }
           }
         }
