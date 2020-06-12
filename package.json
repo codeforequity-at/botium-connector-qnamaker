@@ -1,6 +1,6 @@
 {
   "name": "botium-connector-qnamaker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "dist/botium-connector-qnamaker-cjs.js",
   "module": "dist/botium-connector-qnamaker-es.js",
