@@ -92,12 +92,12 @@ Set the capability __CONTAINERMODE__ to __qnamaker__ to activate this connector.
 ### QNAMAKER_KNOWLEDGEBASE_ID
 QnA Maker Knowledgebase ID
 
-### QNAMAKER_RESOURCE_NAME',
+### QNAMAKER_RESOURCE_NAME
 QnA Maker Resource Name
 
-### QNAMAKER_ENDPOINT_KEY',
+### QNAMAKER_ENDPOINT_KEY
 QnA Maker Runtime Key
 
-### QNAMAKER_RESOURCE_KEY',
+### QNAMAKER_RESOURCE_KEY
 QnA Maker Resource Key
 
