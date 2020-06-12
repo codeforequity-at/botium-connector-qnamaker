@@ -36,14 +36,23 @@ class BotiumConnectorQnAMaker {
       [CoreCapabilities.SIMPLEREST_RESPONSE_JSONPATH]: '$.answers[0].answer',
       [CoreCapabilities.SIMPLEREST_RESPONSE_HOOK]: ({ botMsg }) => {
         if (botMsg.sourceData && botMsg.sourceData.answers && botMsg.sourceData.answers.length > 0) {
-          botMsg.nlp = {
-            intent: {
-              name: botMsg.sourceData.answers[0].questions[0],
-              confidence: (botMsg.sourceData.answers[0].score || 0) / 100,
-              intents: botMsg.sourceData.answers.length > 1 && botMsg.sourceData.answers.slice(1).map(a => ({
-                name: a.questions[0],
-                confidence: (a.score || 0) / 100
-              }))
+          if (botMsg.sourceData.answers[0].questions.length === 0) {
+            botMsg.nlp = {
+              intent: {
+                incomprehension: true,
+                confidence: 1
+              }
+            }
+          } else {
+            botMsg.nlp = {
+              intent: {
+                name: botMsg.sourceData.answers[0].questions[0],
+                confidence: (botMsg.sourceData.answers[0].score || 0) / 100,
+                intents: botMsg.sourceData.answers.length > 1 ? botMsg.sourceData.answers.slice(1).map(a => ({
+                  name: a.questions[0],
+                  confidence: (a.score || 0) / 100
+                })) : []
+              }
             }
           }
         }
