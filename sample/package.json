@@ -2,11 +2,14 @@
   "name": "botium-qnamaker-sample",
   "version": "1.0.0",
   "scripts": {
-    "test": "mocha spec"
+    "test": "mocha spec",
+    "import-intents": "botium-connector-qnamaker-cli import --output ./spec/intents",
+    "import-testcases": "botium-connector-qnamaker-cli import --buildconvos --output ./spec/import",
+    "export-intents": "botium-connector-qnamaker-cli export --input spec/intents --waitforready"
   },
   "botium": {
     "convodirs": [
-      "spec\\convo"
+      "spec/convo"
     ],
     "expandConvos": true,
     "expandUtterancesToConvos": false

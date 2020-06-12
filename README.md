@@ -61,13 +61,6 @@ Content-Type: application/json
 {"question":"<Your question>"}
 ```
 
-The _endpoint_ is composed by the HOST and the URL, for the example above:
-
-    https://yyyyyyyyyyy.azurewebsites.net/qnamaker/knowledgebases/xxxxxxxxxxxxx/generateAnswer
-
-And the _endpoint key_ is the zzzzzzzzzzzzzzzzzzzzz-value from above.
-
-
 The botium.json file should look something like this:
 
 ```
@@ -76,7 +69,8 @@ The botium.json file should look something like this:
     "Capabilities": {
       "PROJECTNAME": "<whatever>",
       "CONTAINERMODE": "qnamaker",
-      "QNAMAKER_ENDPOINT": "https://yyyyyyyyyyy.azurewebsites.net/qnamaker/knowledgebases/xxxxxxxxxxxxx/generateAnswer",
+      "QNAMAKER_KNOWLEDGEBASE_ID": "xxxxxxxxxxxxx",
+      "QNAMAKER_RESOURCE_NAME": "yyyyyyyyyyy",
       "QNAMAKER_ENDPOINT_KEY": "zzzzzzzzzzzzzzzzzzzzz"
     }
   }
@@ -95,8 +89,15 @@ Botium setup is ready, you can begin to write your [BotiumScript](https://botium
 
 Set the capability __CONTAINERMODE__ to __qnamaker__ to activate this connector.
 
-### QNAMAKER_ENDPOINT
-Endpoint URL, see above
+### QNAMAKER_KNOWLEDGEBASE_ID
+QnA Maker Knowledgebase ID
 
-### QNAMAKER_ENDPOINT_KEY
-Endpoint key, see above
+### QNAMAKER_RESOURCE_NAME',
+QnA Maker Resource Name
+
+### QNAMAKER_ENDPOINT_KEY',
+QnA Maker Runtime Key
+
+### QNAMAKER_RESOURCE_KEY',
+QnA Maker Resource Key
+

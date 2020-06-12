@@ -1,7 +1,0 @@
-media bootable
-
-#me
-is the media bootable
-
-#bot
-The media from this site can be used to create bootable USB drives and DVDs which will allow you to access recovery tools.
