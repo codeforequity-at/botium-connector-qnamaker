@@ -3,8 +3,9 @@
     "Capabilities": {
       "PROJECTNAME": "botium-qnamaker-sample",
       "CONTAINERMODE": "qnamaker",
-      "QNAMAKER_ENDPOINT": "https://yyyyyyyyyyy.azurewebsites.net/qnamaker/knowledgebases/xxxxxxxxxxxxx/generateAnswer",
-      "QNAMAKER_ENDPOINT_KEY": "xxx"
+      "QNAMAKER_KNOWLEDGEBASE_ID": "566de871-7468-4a01-9759-983a10b50df4",
+      "QNAMAKER_RESOURCE_NAME": "coronabotat",
+      "QNAMAKER_ENDPOINT_KEY": ""
     }
   }
 }

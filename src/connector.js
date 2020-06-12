@@ -5,8 +5,10 @@ const SimpleRestContainer = require('botium-core/src/containers/plugins/SimpleRe
 const { Capabilities: CoreCapabilities } = require('botium-core')
 
 const Capabilities = {
-  QNAMAKER_ENDPOINT: 'QNAMAKER_ENDPOINT',
-  QNAMAKER_ENDPOINT_KEY: 'QNAMAKER_ENDPOINT_KEY'
+  QNAMAKER_KNOWLEDGEBASE_ID: 'QNAMAKER_KNOWLEDGEBASE_ID',
+  QNAMAKER_RESOURCE_NAME: 'QNAMAKER_RESOURCE_NAME',
+  QNAMAKER_ENDPOINT_KEY: 'QNAMAKER_ENDPOINT_KEY',
+  QNAMAKER_RESOURCE_KEY: 'QNAMAKER_RESOURCE_KEY'
 }
 
 class BotiumConnectorQnAMaker {
@@ -19,13 +21,13 @@ class BotiumConnectorQnAMaker {
 
   Validate () {
     debug('Validate called')
-
-    if (!this.caps[Capabilities.QNAMAKER_ENDPOINT]) throw new Error('Capability QNAMAKER_ENDPOINT required')
+    if (!this.caps[Capabilities.QNAMAKER_KNOWLEDGEBASE_ID]) throw new Error('Capability QNAMAKER_KNOWLEDGEBASE_ID required')
+    if (!this.caps[Capabilities.QNAMAKER_RESOURCE_NAME]) throw new Error('Capability QNAMAKER_RESOURCE_NAME required')
     if (!this.caps[Capabilities.QNAMAKER_ENDPOINT_KEY]) throw new Error('Capability QNAMAKER_ENDPOINT_KEY required')
 
     // default values
     this.delegateCaps = {
-      [CoreCapabilities.SIMPLEREST_URL]: this.caps[Capabilities.QNAMAKER_ENDPOINT],
+      [CoreCapabilities.SIMPLEREST_URL]: `https://${this.caps[Capabilities.QNAMAKER_RESOURCE_NAME]}.azurewebsites.net/qnamaker/knowledgebases/${this.caps[Capabilities.QNAMAKER_KNOWLEDGEBASE_ID]}/generateAnswer`,
       [CoreCapabilities.SIMPLEREST_METHOD]: 'POST',
       [CoreCapabilities.SIMPLEREST_BODY_TEMPLATE]: '{ "question": "{{msg.messageText}}", "top": 5 }',
       [CoreCapabilities.SIMPLEREST_HEADERS_TEMPLATE]: {
