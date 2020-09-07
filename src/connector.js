@@ -64,6 +64,10 @@ class BotiumConnectorQnAMaker {
     return this.delegateContainer.Validate()
   }
 
+  Build () {
+    return this.delegateContainer.Build()
+  }
+
   Start () {
     return this.delegateContainer.Start()
   }
@@ -74,6 +78,10 @@ class BotiumConnectorQnAMaker {
 
   Stop () {
     return this.delegateContainer.Stop()
+  }
+
+  Clean () {
+    return this.delegateContainer.Clean()
   }
 }
 
