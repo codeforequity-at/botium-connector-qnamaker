@@ -1,11 +1,9 @@
-const path = require('path')
 const request = require('request-promise-native')
 const botium = require('botium-core')
 const debug = require('debug')('botium-connector-qnamaker-intents')
 
 const getCaps = (caps) => {
   const result = caps || {}
-  result[botium.Capabilities.CONTAINERMODE] = path.resolve(__dirname, '..', 'index.js')
   return result
 }
 
