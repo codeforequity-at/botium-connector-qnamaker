@@ -99,5 +99,5 @@ QnA Maker Resource Name
 QnA Maker Runtime Key
 
 ### QNAMAKER_RESOURCE_KEY
-QnA Maker Resource Key
+QnA Maker Authoring/Subscription Key
 

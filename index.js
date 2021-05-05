@@ -44,8 +44,8 @@ module.exports = {
       },
       {
         name: 'QNAMAKER_RESOURCE_KEY',
-        label: 'QnA Maker Resource Key',
-        description: 'In QnA Maker go to your profile, and then select Service settings. You can choose any of the two keys. (only needed if using the Test Case Wizard)',
+        label: 'QnA Maker Authoring/Subscription Key',
+        description: 'In the Azure Portal, find these keys on the Cognitive Services resource on the Keys and Endpoint page. (only needed if using the Test Case Wizard)',
         type: 'secret',
         required: false
       }
