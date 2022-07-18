@@ -43,7 +43,7 @@ const importIntents = async ({ caps, buildconvos }) => {
   const utterances = []
 
   const requestOptions = {
-    uri: `https://${ccaps.QNAMAKER_RESOURCE_NAME}.cognitiveservices.azure.com/qnamaker/v4.0/knowledgebases/${ccaps.QNAMAKER_KNOWLEDGEBASE_ID}/test/qna`,
+    uri: `https://${ccaps.COGNITIVE_SERVICES_RESOURCE_NAME || ccaps.QNAMAKER_RESOURCE_NAME}.cognitiveservices.azure.com/qnamaker/v4.0/knowledgebases/${ccaps.QNAMAKER_KNOWLEDGEBASE_ID}/test/qna`,
     method: 'GET',
     headers: {
       'Ocp-Apim-Subscription-Key': ccaps.QNAMAKER_RESOURCE_KEY
@@ -106,7 +106,7 @@ const exportIntents = async ({ caps, overwrite, waitforready }, { convos, uttera
   }
 
   const requestOptions = {
-    uri: `https://${ccaps.QNAMAKER_RESOURCE_NAME}.cognitiveservices.azure.com/qnamaker/v4.0/knowledgebases/${ccaps.QNAMAKER_KNOWLEDGEBASE_ID}/test/qna`,
+    uri: `https://${ccaps.COGNITIVE_SERVICES_RESOURCE_NAME || ccaps.QNAMAKER_RESOURCE_NAME}.cognitiveservices.azure.com/qnamaker/v4.0/knowledgebases/${ccaps.QNAMAKER_KNOWLEDGEBASE_ID}/test/qna`,
     method: 'GET',
     headers: {
       'Ocp-Apim-Subscription-Key': ccaps.QNAMAKER_RESOURCE_KEY

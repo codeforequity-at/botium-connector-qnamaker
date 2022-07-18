@@ -48,6 +48,13 @@ module.exports = {
         description: 'In the Azure Portal, find these keys on the Cognitive Services resource on the Keys and Endpoint page. (only needed if using the Test Case Wizard)',
         type: 'secret',
         required: false
+      },
+      {
+        name: 'COGNITIVE_SERVICES_RESOURCE_NAME',
+        label: 'Cognitive Services Resource Name',
+        description: 'Resource Name for Cognitive Services (needed for Model Downloader)',
+        type: 'string',
+        required: false
       }
     ]
   }

@@ -101,3 +101,6 @@ QnA Maker Runtime Key
 ### QNAMAKER_RESOURCE_KEY
 QnA Maker Authoring/Subscription Key
 
+### COGNITIVE_SERVICES_RESOURCE_NAME
+Cognitive Services Resource Name (for Model Downloader)
+

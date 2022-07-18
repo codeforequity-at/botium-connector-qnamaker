@@ -1,12 +1,12 @@
 {
   "name": "botium-connector-qnamaker",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "dist/botium-connector-qnamaker-cjs.js",
   "module": "dist/botium-connector-qnamaker-es.js",
   "bin": {
     "botium-connector-qnamaker-cli": "./bin/cli.js"
-  },  
+  },
   "scripts": {
     "build": "npm run eslint && rollup -c",
     "eslint": "eslint index.js src bin",
