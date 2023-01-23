@@ -7,6 +7,7 @@ const { Capabilities: CoreCapabilities } = require('botium-core')
 const Capabilities = {
   QNAMAKER_KNOWLEDGEBASE_ID: 'QNAMAKER_KNOWLEDGEBASE_ID',
   QNAMAKER_RESOURCE_NAME: 'QNAMAKER_RESOURCE_NAME',
+  QNAMAKER_RESOURCE_ENDPOINT: 'QNAMAKER_RESOURCE_ENDPOINT',
   QNAMAKER_ENDPOINT_KEY: 'QNAMAKER_ENDPOINT_KEY',
   QNAMAKER_RESOURCE_KEY: 'QNAMAKER_RESOURCE_KEY'
 }
@@ -25,9 +26,11 @@ class BotiumConnectorQnAMaker {
     if (!this.caps[Capabilities.QNAMAKER_RESOURCE_NAME]) throw new Error('Capability QNAMAKER_RESOURCE_NAME required')
     if (!this.caps[Capabilities.QNAMAKER_ENDPOINT_KEY]) throw new Error('Capability QNAMAKER_ENDPOINT_KEY required')
 
+    const endpointUrl = `${this.caps[Capabilities.QNAMAKER_RESOURCE_ENDPOINT] || `https://${this.caps[Capabilities.QNAMAKER_RESOURCE_NAME]}.azurewebsites.net`}/qnamaker/knowledgebases/${this.caps[Capabilities.QNAMAKER_KNOWLEDGEBASE_ID]}/generateAnswer`
+
     // default values
     this.delegateCaps = {
-      [CoreCapabilities.SIMPLEREST_URL]: `https://${this.caps[Capabilities.QNAMAKER_RESOURCE_NAME]}.azurewebsites.net/qnamaker/knowledgebases/${this.caps[Capabilities.QNAMAKER_KNOWLEDGEBASE_ID]}/generateAnswer`,
+      [CoreCapabilities.SIMPLEREST_URL]: endpointUrl,
       [CoreCapabilities.SIMPLEREST_METHOD]: 'POST',
       [CoreCapabilities.SIMPLEREST_BODY_TEMPLATE]: '{ "question": "{{msg.messageText}}", "top": 5 }',
       [CoreCapabilities.SIMPLEREST_HEADERS_TEMPLATE]: {

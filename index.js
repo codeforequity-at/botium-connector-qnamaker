@@ -36,6 +36,14 @@ module.exports = {
         required: true
       },
       {
+        name: 'QNAMAKER_RESOURCE_ENDPOINT',
+        label: 'QnA Maker Resource Endpoint',
+        description: 'To specify a custom endpoint Url, like https://xxxxxxxxxxxx.azurewebsites.net',
+        type: 'url',
+        required: false,
+        advanced: false
+      },
+      {
         name: 'QNAMAKER_ENDPOINT_KEY',
         label: 'QnA Maker Runtime Key',
         description: 'In QnA Maker "My knowledge bases", click on "View Code" to see the runtime key - "Authorization: EndpointKey xxxxxxxxxxx" (Copy&Paste the xxxxxx part)',
@@ -45,16 +53,24 @@ module.exports = {
       {
         name: 'QNAMAKER_RESOURCE_KEY',
         label: 'QnA Maker Authoring/Subscription Key',
-        description: 'In the Azure Portal, find these keys on the Cognitive Services resource on the Keys and Endpoint page. (only needed if using the Test Case Wizard)',
+        description: 'In the Azure Portal, find these keys on the Cognitive Services resource on the Keys and Endpoint page (only required if using the Test Case Wizard)',
         type: 'secret',
         required: false
       },
       {
         name: 'COGNITIVE_SERVICES_RESOURCE_NAME',
         label: 'Cognitive Services Resource Name',
-        description: 'Resource Name for Cognitive Services (needed for Model Downloader)',
+        description: 'Resource Name for Cognitive Services (only required if using the Test Case Wizard)',
         type: 'string',
         required: false
+      },
+      {
+        name: 'COGNITIVE_SERVICES_RESOURCE_ENDPOINT',
+        label: 'Cognitive Services Resource Endpoint',
+        description: 'To specify a custom endpoint Url, like https://xxxxxxxxxxxx.cognitiveservices.azure.com',
+        type: 'url',
+        required: false,
+        advanced: false
       }
     ]
   }
