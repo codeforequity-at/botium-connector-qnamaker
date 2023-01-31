@@ -95,6 +95,10 @@ QnA Maker Knowledgebase ID
 ### QNAMAKER_RESOURCE_NAME
 QnA Maker Resource Name
 
+### QNAMAKER_RESOURCE_ENDPOINT
+QnA Maker Resource Endpoint
+To specify a custom endpoint Url, like https://xxxxxxxxxxxx.azurewebsites.net
+
 ### QNAMAKER_ENDPOINT_KEY
 QnA Maker Runtime Key
 
@@ -104,3 +108,6 @@ QnA Maker Authoring/Subscription Key
 ### COGNITIVE_SERVICES_RESOURCE_NAME
 Cognitive Services Resource Name (for Model Downloader)
 
+### COGNITIVE_SERVICES_RESOURCE_ENDPOINT
+Cognitive Services Resource Endpoint
+To specify a custom endpoint Url, like https://xxxxxxxxxxxx.cognitiveservices.azure.com
