@@ -1,6 +1,6 @@
 {
   "name": "botium-connector-qnamaker",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "main": "dist/botium-connector-qnamaker-cjs.js",
   "module": "dist/botium-connector-qnamaker-es.js",
@@ -10,7 +10,9 @@
   "scripts": {
     "build": "npm run eslint && rollup -c",
     "eslint": "eslint index.js src bin",
-    "eslint-fix": "eslint --fix index.js src bin"
+    "eslint-fix": "eslint --fix index.js src bin",
+    "test": "echo 'Not implemented yet'",
+    "test-nightly": "echo 'Not implemented yet'"
   },
   "repository": {
     "type": "git",
@@ -27,10 +29,11 @@
     "@babel/node": "^7.8.7",
     "@babel/plugin-transform-runtime": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-node": "^11.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-mocha": "^10.1.0",
+    "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "rollup": "^2.3.1",
