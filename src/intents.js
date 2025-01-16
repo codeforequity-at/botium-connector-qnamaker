@@ -1,4 +1,3 @@
-const request = require('request-promise-native')
 const botium = require('botium-core')
 const debug = require('debug')('botium-connector-qnamaker-intents')
 
@@ -15,11 +14,15 @@ const waitOperationReady = async (ccaps, operationId, interval) => {
         uri: `${ccaps.COGNITIVE_SERVICES_RESOURCE_ENDPOINT || `https://${ccaps.QNAMAKER_RESOURCE_NAME}.cognitiveservices.azure.com`}/qnamaker/v4.0/operations/${operationId}`,
         method: 'GET',
         headers: {
-          'Ocp-Apim-Subscription-Key': ccaps.QNAMAKER_RESOURCE_KEY
-        },
-        json: true
+          'Ocp-Apim-Subscription-Key': ccaps.QNAMAKER_RESOURCE_KEY,
+          'Content-Type': 'application/json'
+        }
       }
-      const operationResponse = await request(requestOptions)
+      const operationResponseRaw = await fetch(requestOptions.uri, requestOptions)
+      if (!operationResponseRaw.ok) {
+        throw new Error(`QnA Maker wait operation ready failed: ${operationResponseRaw.status}/${operationResponseRaw.statusText}`)
+      }
+      const operationResponse = await operationResponseRaw.json()
       debug(`Qna Maker checking operation status ${operationId}: ${operationResponse.operationState}`)
       if (operationResponse.operationState === 'Succeeded' || operationResponse.operationState === 'Failed') {
         return operationResponse
@@ -46,12 +49,15 @@ const importIntents = async ({ caps, buildconvos }) => {
     uri: `${ccaps.COGNITIVE_SERVICES_RESOURCE_ENDPOINT || `https://${ccaps.COGNITIVE_SERVICES_RESOURCE_NAME || ccaps.QNAMAKER_RESOURCE_NAME}.cognitiveservices.azure.com`}/qnamaker/v4.0/knowledgebases/${ccaps.QNAMAKER_KNOWLEDGEBASE_ID}/test/qna`,
     method: 'GET',
     headers: {
-      'Ocp-Apim-Subscription-Key': ccaps.QNAMAKER_RESOURCE_KEY
-    },
-    json: true
+      'Ocp-Apim-Subscription-Key': ccaps.QNAMAKER_RESOURCE_KEY,
+      accept: 'application/json'
+    }
   }
-  const qnaResponse = await request(requestOptions)
-
+  const qnaResponseRaw = await fetch(requestOptions.uri, requestOptions)
+  if (!qnaResponseRaw.ok) {
+    throw new Error(`QnA Maker download data for import failed: ${qnaResponseRaw.status}/${qnaResponseRaw.statusText}`)
+  }
+  const qnaResponse = await qnaResponseRaw.json()
   debug(`QnA Maker got ${qnaResponse.qnaDocuments.length} QnA Pairs`)
 
   for (const intent of qnaResponse.qnaDocuments) {
@@ -109,12 +115,15 @@ const exportIntents = async ({ caps, overwrite, waitforready }, { convos, uttera
     uri: `${ccaps.COGNITIVE_SERVICES_RESOURCE_ENDPOINT || `https://${ccaps.COGNITIVE_SERVICES_RESOURCE_NAME || ccaps.QNAMAKER_RESOURCE_NAME}.cognitiveservices.azure.com`}/qnamaker/v4.0/knowledgebases/${ccaps.QNAMAKER_KNOWLEDGEBASE_ID}/test/qna`,
     method: 'GET',
     headers: {
-      'Ocp-Apim-Subscription-Key': ccaps.QNAMAKER_RESOURCE_KEY
-    },
-    json: true
+      'Ocp-Apim-Subscription-Key': ccaps.QNAMAKER_RESOURCE_KEY,
+      accept: 'application/json'
+    }
   }
-  const qnaResponse = await request(requestOptions)
-
+  const qnaResponseRaw = await fetch(requestOptions)
+  if (!qnaResponseRaw.ok) {
+    throw new Error(`QnA Maker download data for export failed: ${qnaResponseRaw.status}/${qnaResponseRaw.statusText}`)
+  }
+  const qnaResponse = await qnaResponseRaw.json()
   status(`QnA Maker downloaded ${qnaResponse.qnaDocuments.length} QnA Pairs`)
 
   const updatedDocuments = []
@@ -171,11 +180,16 @@ const exportIntents = async ({ caps, overwrite, waitforready }, { convos, uttera
       uri: `${ccaps.COGNITIVE_SERVICES_RESOURCE_ENDPOINT || `https://${ccaps.QNAMAKER_RESOURCE_NAME}.cognitiveservices.azure.com`}/qnamaker/v4.0/knowledgebases/${ccaps.QNAMAKER_KNOWLEDGEBASE_ID}`,
       method: 'PATCH',
       headers: {
-        'Ocp-Apim-Subscription-Key': ccaps.QNAMAKER_RESOURCE_KEY
+        'Ocp-Apim-Subscription-Key': ccaps.QNAMAKER_RESOURCE_KEY,
+        'Content-Type': 'application/json'
       },
-      json: body
+      body: JSON.stringify(body)
     }
-    const updateResponse = await request(updateOptions)
+    const updateResponseRaw = await fetch(updateOptions.uri, updateOptions)
+    if (!updateResponseRaw.ok) {
+      throw new Error(`QnA Maker upload data for export failed: ${updateResponseRaw.status}/${updateResponseRaw.statusText}`)
+    }
+    const updateResponse = await updateResponseRaw.json()
     if (updateResponse && updateResponse.operationId && waitforready) {
       status(`Waiting for QnA Maker upload (Operation ${updateResponse.operationId}) to finish`)
       await waitOperationReady(ccaps, updateResponse.operationId)
