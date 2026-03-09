@@ -6,6 +6,21 @@ const getCaps = (caps) => {
   return result
 }
 
+const getFetch = () => {
+  if (typeof global.fetch !== 'function') {
+    throw new Error('Native fetch API not available. Please use Node.js 18 or newer.')
+  }
+  return global.fetch.bind(global)
+}
+
+const fetchJson = async ({ uri, ...options }, errorPrefix) => {
+  const response = await getFetch()(uri, options)
+  if (!response.ok) {
+    throw new Error(`${errorPrefix}: ${response.status}/${response.statusText}`)
+  }
+  return response.json()
+}
+
 const waitOperationReady = async (ccaps, operationId, interval) => {
   const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
   while (true) {
@@ -18,11 +33,7 @@ const waitOperationReady = async (ccaps, operationId, interval) => {
           'Content-Type': 'application/json'
         }
       }
-      const operationResponseRaw = await fetch(requestOptions.uri, requestOptions)
-      if (!operationResponseRaw.ok) {
-        throw new Error(`QnA Maker wait operation ready failed: ${operationResponseRaw.status}/${operationResponseRaw.statusText}`)
-      }
-      const operationResponse = await operationResponseRaw.json()
+      const operationResponse = await fetchJson(requestOptions, 'QnA Maker wait operation ready failed')
       debug(`Qna Maker checking operation status ${operationId}: ${operationResponse.operationState}`)
       if (operationResponse.operationState === 'Succeeded' || operationResponse.operationState === 'Failed') {
         return operationResponse
@@ -53,11 +64,7 @@ const importIntents = async ({ caps, buildconvos }) => {
       accept: 'application/json'
     }
   }
-  const qnaResponseRaw = await fetch(requestOptions.uri, requestOptions)
-  if (!qnaResponseRaw.ok) {
-    throw new Error(`QnA Maker download data for import failed: ${qnaResponseRaw.status}/${qnaResponseRaw.statusText}`)
-  }
-  const qnaResponse = await qnaResponseRaw.json()
+  const qnaResponse = await fetchJson(requestOptions, 'QnA Maker download data for import failed')
   debug(`QnA Maker got ${qnaResponse.qnaDocuments.length} QnA Pairs`)
 
   for (const intent of qnaResponse.qnaDocuments) {
@@ -119,11 +126,7 @@ const exportIntents = async ({ caps, overwrite, waitforready }, { convos, uttera
       accept: 'application/json'
     }
   }
-  const qnaResponseRaw = await fetch(requestOptions)
-  if (!qnaResponseRaw.ok) {
-    throw new Error(`QnA Maker download data for export failed: ${qnaResponseRaw.status}/${qnaResponseRaw.statusText}`)
-  }
-  const qnaResponse = await qnaResponseRaw.json()
+  const qnaResponse = await fetchJson(requestOptions, 'QnA Maker download data for export failed')
   status(`QnA Maker downloaded ${qnaResponse.qnaDocuments.length} QnA Pairs`)
 
   const updatedDocuments = []
@@ -185,11 +188,7 @@ const exportIntents = async ({ caps, overwrite, waitforready }, { convos, uttera
       },
       body: JSON.stringify(body)
     }
-    const updateResponseRaw = await fetch(updateOptions.uri, updateOptions)
-    if (!updateResponseRaw.ok) {
-      throw new Error(`QnA Maker upload data for export failed: ${updateResponseRaw.status}/${updateResponseRaw.statusText}`)
-    }
-    const updateResponse = await updateResponseRaw.json()
+    const updateResponse = await fetchJson(updateOptions, 'QnA Maker upload data for export failed')
     if (updateResponse && updateResponse.operationId && waitforready) {
       status(`Waiting for QnA Maker upload (Operation ${updateResponse.operationId}) to finish`)
       await waitOperationReady(ccaps, updateResponse.operationId)
